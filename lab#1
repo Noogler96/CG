@@ -1,0 +1,20 @@
+<HTML>
+    <body>
+        <script>
+            function onClick(event)  {
+          //alert("onClick: x=" +event.offsetX+" y="+event.offsetY);
+          ctx.fillRect(event.offsetX, event.offsetY, 10, 10);
+      }
+  </script>
+  <canvas id="lab01" height="100" width="100">
+    <script>
+        var canvas = document.getElementById("lab01");
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#00aa00";
+        ctx.fillRect(0, 0, 50,50);
+        ctx.fillStyle = "#aa0000";
+        canvas.addEventListener("click", onClick);
+    </script>
+</canvas>
+</body>
+</HTML>
