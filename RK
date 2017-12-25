@@ -1,0 +1,115 @@
+<html>
+	<body style="margin: 0">
+		<canvas id="canvas" width="860" height="640" style="border: 1px solid black"></canvas>
+		<script>
+			const canvas = document.getElementById("canvas")
+			const ctx = canvas.getContext("2d")
+			class Rect {
+				constructor(x, y, width, height, color) {
+					this.x = x
+					this.y = y
+					this.width = width
+					this.height = height
+					this.color = color
+					this.coeff = 0
+				}
+				draw() {
+					if (this.color) { ctx.fillStyle = this.color }
+					ctx.beginPath()
+					ctx.rect(this.x, this.y, this.width, this.height)
+					if (this.useFill) { ctx.fill() }
+					else {
+						ctx.stroke()
+						ctx.clearRect(this.x, this.y, this.width, this.height)
+					}
+				}
+				checkIntersection(x, y) {
+					if (
+						x > this.x &&
+						x < this.x + this.width &&
+						y > this.y &&
+						y < this.y + this.height
+					) {
+						this.useFill = true
+					}
+				}
+				moveX() {
+					if (this.coeff < 500) {
+						this.x += 0.5
+						this.coeff += 0.5
+					}
+					return this
+				}
+			}
+			class Circle {
+				constructor(x, y, radius, color) {
+					this.x = x
+					this.y = y
+					this.radius = radius
+					this.color = color
+					this.coeff = 0
+				}
+				draw() {
+					if (this.color) { ctx.fillStyle = this.color }
+					ctx.beginPath()
+					ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+					if (this.useFill) { ctx.fill() }
+					else {
+						ctx.stroke()
+						ctx.beginPath()
+						ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+						ctx.fillStyle = '#ffffff'
+						ctx.fill()
+						ctx.fillStyle = this.color
+					}
+				}
+				checkIntersection(x, y) {
+					if (Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2)) < this.radius) {
+						this.useFill = true
+					}
+				}
+				moveX() {
+					if (this.coeff < 500) {
+						this.x += 0.5
+						this.coeff += 0.5
+					}
+					return this
+				}
+			}
+			const figures = [
+				new Rect(10, 210, 300, 150, '#00ff00'),
+				new Circle(250, 368, 30, '#aaaaaa'),
+				new Circle(65, 368, 30),
+				new Rect(20, 220, 50, 50, '#0000ff'),
+				new Rect(90, 220, 50, 50, '#0000ff'),
+				new Rect(160, 220, 50, 50, '#0000ff'),
+			  new Rect(230, 220, 50, 50, '#0000ff'),
+				new Rect(520, 250, 250, 150, '#dddddd'),
+			]
+			function launchAnimation() {
+				ctx.clearRect(0, 0, canvas.width, canvas.height)
+				figures[0].moveX().draw()
+				figures[1].moveX().draw()
+				figures[2].moveX().draw()
+				figures[3].moveX().draw()
+				figures[4].moveX().draw()
+				figures[5].moveX().draw()
+				figures[6].moveX().draw()
+				figures[7].draw()
+			}
+			function startAnimation() {
+				launchAnimation()
+				requestAnimationFrame(startAnimation)
+			}
+			let animation = false
+			function onClick(event) {
+				if (!animation) {
+					startAnimation()
+					animation = true
+				}
+				figures.forEach(figure => figure.checkIntersection(event.clientX, event.clientY))
+			}
+			canvas.addEventListener('click', onClick)
+		</script>
+	</body>
+</html>
