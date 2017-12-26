@@ -1,4 +1,5 @@
 <html>
+	
 	<body style="margin: 0">
 		<canvas id="canvas" width="860" height="640" style="border: 1px solid black"></canvas>
 		<script>
@@ -34,7 +35,7 @@
 					}
 				}
 				moveX() {
-					if (this.coeff < 500) {
+					if (this.coeff < 400) {
 						this.x += 0.5
 						this.coeff += 0.5
 					}
@@ -69,7 +70,7 @@
 					}
 				}
 				moveX() {
-					if (this.coeff < 500) {
+					if (this.coeff < 400) {
 						this.x += 0.5
 						this.coeff += 0.5
 					}
@@ -77,16 +78,17 @@
 				}
 			}
 			const figures = [
-				new Rect(10, 210, 300, 150, '#00ff00'),
-				new Circle(250, 368, 30, '#aaaaaa'),
-				new Circle(65, 368, 30),
-				new Rect(20, 220, 50, 50, '#0000ff'),
-				new Rect(90, 220, 50, 50, '#0000ff'),
-				new Rect(160, 220, 50, 50, '#0000ff'),
-			  new Rect(230, 220, 50, 50, '#0000ff'),
-				new Rect(520, 250, 250, 150, '#dddddd'),
+				new Rect(10, 210, 200, 50, '#00ff00'),
+				new Rect(-31, 210, 40, 10, '#aaaaaa'),
+				new Rect(-31, 230, 40, 10, '#aaaaaa'),
+				new Rect(-31, 250, 40, 10, '#aaaaaa'),
+				new Circle(215, 235, 25, '#aaaaaa'),
+				new Circle(100, 235, 10, '#aaaaaa'),
+				new Circle(150, 235, 10, '#aaaaaa'),
+				new Circle(50, 235, 10, '#aaaaaa'),
+				new Circle(650, 250, 150, '#aaaaaa')
 			]
-			function launchAnimation() {
+			function commitChaos() {
 				ctx.clearRect(0, 0, canvas.width, canvas.height)
 				figures[0].moveX().draw()
 				figures[1].moveX().draw()
@@ -95,10 +97,11 @@
 				figures[4].moveX().draw()
 				figures[5].moveX().draw()
 				figures[6].moveX().draw()
-				figures[7].draw()
+				figures[7].moveX().draw()
+				figures[8].draw()
 			}
 			function startAnimation() {
-				launchAnimation()
+				commitChaos()
 				requestAnimationFrame(startAnimation)
 			}
 			let animation = false
